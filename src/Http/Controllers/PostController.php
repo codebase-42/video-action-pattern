@@ -77,16 +77,29 @@ class PostController extends Controller
         ];
     }
 
+    public function remindApproversOfAllPending(Post $post): array
+    {
+        $posts = Post::getAllPending();
+
+        foreach ($posts as $post) {
+            $post->notifyApprovers();
+        }
+
+        return [
+            ///
+        ];
+    }
+
     /**
      * @throws \Exception
      */
-    public function approveAll(): array
+    public function approveAllPending(): array
     {
         if (!$this->loggedUser->accessType->canApprove()) {
             throw new \Exception('User cannot approve posts');
         }
 
-        $posts = Post::all();
+        $posts = Post::getAllPending();
 
         foreach ($posts as $post) {
             $post->publish();
@@ -102,13 +115,13 @@ class PostController extends Controller
     /**
      * @throws \Exception
      */
-    public function rejectAll(string $reason): array
+    public function rejectAllPending(string $reason): array
     {
         if (!$this->loggedUser->accessType->canApprove()) {
             throw new \Exception('User cannot reject posts');
         }
 
-        $posts = Post::all();
+        $posts = Post::getAllPending();
 
         foreach ($posts as $post) {
             $post->reject();

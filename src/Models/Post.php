@@ -50,7 +50,7 @@ class Post
     /**
      * @return static[]
      */
-    public static function all(): array
+    public static function getAllPending(): array
     {
         ///
         return [];
