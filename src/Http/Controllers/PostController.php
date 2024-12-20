@@ -18,6 +18,7 @@ class PostController extends Controller
         $post = new Post;
         $post->title = $title;
         $post->body = $body;
+        $post->author = $this->loggedUser;
         $post->save();
 
         if ($this->loggedUser->isTrusted()) {
