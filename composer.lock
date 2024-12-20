@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "aebb0efd5c311159b88d5e274d751d90",
+    "packages": [
+        {
+            "name": "leocello/sweet-enum",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leocello/sweet-enum.git",
+                "reference": "a32fecdb05e053e423abdfd6923088d070a9c16e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leocello/sweet-enum/zipball/a32fecdb05e053e423abdfd6923088d070a9c16e",
+                "reference": "a32fecdb05e053e423abdfd6923088d070a9c16e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.16",
+                "pestphp/pest": "^2.34"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Leocello\\SweetEnum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Leo Oberle",
+                    "email": "leocello@gmail.com"
+                }
+            ],
+            "description": "Provides the ability to declare \"properties\" to enums using PHP Attributes, also to define classes for specific case functionalities and much more.",
+            "support": {
+                "issues": "https://github.com/leocello/sweet-enum/issues",
+                "source": "https://github.com/leocello/sweet-enum/tree/v0.4.0"
+            },
+            "time": "2024-08-27T13:29:41+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
+}
