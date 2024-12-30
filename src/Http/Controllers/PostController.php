@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreatePost;
+use App\Actions\NotifyApprovers;
+use App\Actions\PublishPost;
+use App\Actions\RejectPost;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -11,22 +15,8 @@ class PostController extends Controller
      */
     public function create(string $title, string $body): array
     {
-        if (!$this->loggedUser->accessType->canWrite()) {
-            throw new \Exception('User cannot write posts');
-        }
-
-        $post = new Post;
-        $post->title = $title;
-        $post->body = $body;
-        $post->author = $this->loggedUser;
-        $post->save();
-
-        if ($this->loggedUser->isTrusted()) {
-            $post->publish();
-            $post->notifyReaders();
-        } else {
-            $post->notifyApprovers();
-        }
+        $createPost = new CreatePost($this->loggedUser);
+        $post = $createPost($title, $body);
 
         return [
             ///
@@ -38,13 +28,8 @@ class PostController extends Controller
      */
     public function approve(Post $post): array
     {
-        if (!$this->loggedUser->accessType->canApprove()) {
-            throw new \Exception('User cannot approve posts');
-        }
-
-        $post->publish();
-        $post->notifyReaders();
-        $post->notifyWriterApproval();
+        $publishPost = new PublishPost($this->loggedUser, $post);
+        $publishPost();
 
         return [
             ///
@@ -56,12 +41,8 @@ class PostController extends Controller
      */
     public function reject(Post $post, string $reason): array
     {
-        if (!$this->loggedUser->accessType->canApprove()) {
-            throw new \Exception('User cannot reject posts');
-        }
-
-        $post->reject();
-        $post->notifyWriterRejection($reason);
+        $publishPost = new RejectPost($this->loggedUser, $post);
+        $publishPost($reason);
 
         return [
             ///
@@ -70,7 +51,7 @@ class PostController extends Controller
 
     public function remindApprovers(Post $post): array
     {
-        $post->notifyApprovers();
+        new NotifyApprovers($post)();
 
         return [
             ///
@@ -82,7 +63,7 @@ class PostController extends Controller
         $posts = Post::getAllPending();
 
         foreach ($posts as $post) {
-            $post->notifyApprovers();
+            new NotifyApprovers($post)();
         }
 
         return [
@@ -102,9 +83,7 @@ class PostController extends Controller
         $posts = Post::getAllPending();
 
         foreach ($posts as $post) {
-            $post->publish();
-            $post->notifyReaders();
-            $post->notifyWriterApproval();
+            new PublishPost($this->loggedUser, $post)();
         }
 
         return [
@@ -124,8 +103,7 @@ class PostController extends Controller
         $posts = Post::getAllPending();
 
         foreach ($posts as $post) {
-            $post->reject();
-            $post->notifyWriterRejection($reason);
+            new RejectPost($this->loggedUser, $post)($reason);
         }
 
         return [

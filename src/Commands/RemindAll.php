@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Actions\NotifyApprovers;
 use App\Models\Post;
 
 class RemindAll
@@ -11,7 +12,7 @@ class RemindAll
         $posts = Post::getAllPending();
 
         foreach ($posts as $post) {
-            $post->notifyApprovers();
+            new NotifyApprovers($post)();
         }
     }
 }
