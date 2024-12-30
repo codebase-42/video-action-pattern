@@ -77,7 +77,7 @@ class PostController extends Controller
         ];
     }
 
-    public function remindApproversOfAllPending(Post $post): array
+    public function remindApproversOfAllPending(): array
     {
         $posts = Post::getAllPending();
 
