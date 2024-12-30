@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Enums\PostStatus;
+use App\Enums\PostStatus;
 
 class Post
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Enums;
+namespace App\Enums;
 
 use Leocello\SweetEnum\SweetCase;
 use Leocello\SweetEnum\SweetEnum;

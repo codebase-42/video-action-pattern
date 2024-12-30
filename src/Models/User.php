@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Enums\UserAccessType;
+use App\Enums\UserAccessType;
 
 class User
 {
